@@ -23,4 +23,6 @@ struct schueler {
 };
 typedef struct schueler schueler;
 
+void freeSeminars(seminarArray seminars);
+
 #endif //CISM_ORGANIZATION_H

@@ -36,33 +36,35 @@ seminarArray getSeminars(char *filename, char type) {
     }
     char *line = NULL;
     size_t len = 0;
+    int linec = 0;
     while (getline(&line, &len, file) != -1) {
+        linec++;
         line[strcspn(line, "\n")] = 0;
-        printf("1| %s\n", line);
         seminars = realloc(seminars, sizeof(seminar) * (seminarc + 1));
         failIfNull(seminars, "realloc");
         char *parsed = strtok(line, ";");
         char buf[80];
-        snprintf(buf, 80, "seminars incorrectly configured at line %d", seminarc);
+        snprintf(buf, 80, "seminars incorrectly configured at line %d\n", linec);
         failIfNull(parsed, buf);
         seminar lSeminar;
-        printf("2| %d, %s\n", seminarc, parsed);
-        lSeminar.name = parsed;
+        lSeminar.name = malloc((strlen(parsed) + 1) * sizeof(char));
+        strcpy( lSeminar.name, parsed);
         parsed = strtok(NULL, ";");
         failIfNull(parsed, buf);
         lSeminar.size = strtol(parsed, NULL, 10);
         parsed = strtok(NULL, ";");
         failIfNull(parsed, buf);
-        if (strcmp(parsed, "W")) {
+        if (strcmp(parsed, "W")==0) {
             lSeminar.seminarType = 'W';
-        } else if (strcmp(parsed, "P")) {
+        } else if (strcmp(parsed, "P")==0) {
             lSeminar.seminarType = 'P';
         } else {
             dieWithoutErrno(buf);
         }
-        if (strcmp(parsed, &type)) {
+        if (parsed[0]==type) {
             seminars[seminarc++] = lSeminar;
-
+        } else {
+            free(lSeminar.name);
         }
     }
     fclose(file);

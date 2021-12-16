@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "fileInterface.h"
+#include "organization.h"
 
 int main(int argc, char* argv[]) {
     if (argc < 3) {
@@ -13,10 +14,11 @@ int main(int argc, char* argv[]) {
     seminarArray seminars = getSeminars("Seminare.csv", 'W');
 
     for(int i = 0; i<seminars.size;i++){
-        printf("%d: %c\n", i, seminars.seminars[i].seminarType);
+        printf("%d: %s\n", i, seminars.seminars[i].name);
     }
 
-    free(seminars.seminars);
+    freeSeminars(seminars);
+
     return 0;
 }
 

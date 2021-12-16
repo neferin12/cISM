@@ -16,8 +16,7 @@ AS_HELP_STRING([--enable-debug],
              *)   AC_MSG_ERROR([bad value ${enableval} for --enable-debug]) ;;
 esac],
 [debug=false])
-
-AM_CONDITIONAL(DEBUG, test x"$debug" = x"true")
+AM_CONDITIONAL([DEBUG], [test x$debug = xtrue])
 
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT
