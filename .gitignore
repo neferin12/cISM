@@ -1,9 +1,8 @@
 ism
 *.o
-build
 *.csv
-build-aux
 .idea
+build
 
 # http://www.gnu.org/software/automake
 
