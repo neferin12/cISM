@@ -3,6 +3,7 @@ ism
 *.csv
 .idea
 build
+build-aux
 
 # http://www.gnu.org/software/automake
 
