@@ -1,4 +1,4 @@
-#include "organization.h"
+#include "headers/organization.h"
 #include <stdlib.h>
 
 void freeSeminars(seminarArray seminars){

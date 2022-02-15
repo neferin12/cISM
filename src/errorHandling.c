@@ -1,17 +1,17 @@
-#include "errorHandling.h"
+#include "headers/errorHandling.h"
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
-void dieWithErrno(char *msg){
+void dieWithErrno(const char *msg){
     perror(msg);
     exit(errno);
 }
-void dieWithoutErrno(char *msg){
+void dieWithoutErrno(const char *msg){
     fprintf(stderr, "%s", msg);
     exit(EXIT_FAILURE);
 }
 
-void failIfNull(void *anyPointer, char *msg){
+void failIfNull(const void *anyPointer, const char *msg){
     if (anyPointer == NULL) {
         dieWithoutErrno(msg);
     }

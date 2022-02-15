@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "fileInterface.h"
-#include "organization.h"
+#include "headers/fileInterface.h"
+#include "headers/organization.h"
 
 int main(int argc, char* argv[]) {
     if (argc < 3) {

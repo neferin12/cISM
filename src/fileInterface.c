@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "fileInterface.h"
-#include "organization.h"
-#include "errorHandling.h"
+#include "headers/fileInterface.h"
+#include "headers/organization.h"
+#include "headers/errorHandling.h"
 
 int countlines(char *filename)
 {
@@ -27,7 +27,7 @@ int countlines(char *filename)
 }
 
 
-seminarArray getSeminars(char *filename, char type) {
+seminarArray getSeminars(const char *filename, char type) {
     seminar *seminars = NULL;
     int seminarc = 0;
     FILE *file = fopen(filename, "r");
