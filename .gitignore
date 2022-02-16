@@ -3,5 +3,6 @@ ism
 *.csv
 .idea
 build
-build-aux
 /cism
+cmake-build-debug
+/cmake-build-debug-coverage/
