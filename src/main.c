@@ -38,6 +38,7 @@ int main(int argc, char* argv[]) {
         }
     }
 
+    freeStudents(students);
     freeSeminars(w_seminars);
     freeSeminars(p_seminars);
 
