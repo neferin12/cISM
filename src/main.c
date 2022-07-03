@@ -24,6 +24,20 @@ int main(int argc, char* argv[]) {
         printf("    %d: %s\n", i, p_seminars.seminars[i].name);
     }
 
+    studentArray students = getStudents(argv[1], w_seminars, p_seminars);
+    for (int i = 0; i < students.size; i++) {
+        student student = students.students[i];
+        printf("%s:\n", student.name);
+        printf("  W:\n");
+        for (int j = 0; j < 3; j++) {
+            printf("      - %s\n", student.wVotes[j].name);
+        }
+        printf("  P:\n");
+        for (int j = 0; j < 3; j++) {
+            printf("      - %s\n", student.pVotes[j].name);
+        }
+    }
+
     freeSeminars(w_seminars);
     freeSeminars(p_seminars);
 

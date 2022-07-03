@@ -8,3 +8,11 @@ void freeSeminars(seminarArray seminars){
 
     free(seminars.seminars);
 }
+
+void freeStudents(studentArray schuelers){
+    for (int i = 0; i < schuelers.size; i++) {
+        free(schuelers.students[i].name);
+    }
+
+    free(schuelers.students);
+}

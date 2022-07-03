@@ -13,7 +13,7 @@ typedef struct seminarArray{
     seminar *seminars;
 } seminarArray;
 
-struct schueler {
+struct student {
     char *name;
     int mimiPoints;
     seminar wVotes[3];
@@ -21,8 +21,14 @@ struct schueler {
     seminar wSeminar;
     seminar pSeminar;
 };
-typedef struct schueler schueler;
+typedef struct student student;
+
+typedef struct studentArray{
+    int size;
+    student *students;
+} studentArray;
 
 void freeSeminars(seminarArray seminars);
+void freeStudents(studentArray schuelers);
 
 #endif //CISM_ORGANIZATION_H

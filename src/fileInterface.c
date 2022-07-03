@@ -73,3 +73,47 @@ seminarArray getSeminars(const char *filename, char type) {
     seminarArray ret = {.size = seminarc, .seminars = seminars};
     return ret;
 }
+
+studentArray getStudents(const char *filename, seminarArray wSeminars, seminarArray pSeminars) {
+    student *students = NULL;
+    int studentc = 0;
+    FILE *file = fopen(filename, "r");
+    if (file == NULL) {
+        dieWithErrno("could not open file");
+    }
+    char *line = NULL;
+    size_t len = 0;
+    int linec = 0;
+    while (getline(&line, &len, file) != -1) {
+        linec++;
+        line[strcspn(line, "\n")] = 0;
+        students = realloc(students, sizeof(student) * (studentc + 1));
+        failIfNull(students, "realloc");
+        char *parsed = strtok(line, ";");
+        char buf[80];
+        snprintf(buf, 80, "students incorrectly configured at line %d\n", linec);
+        failIfNull(parsed, buf);
+        student lStudent;
+        lStudent.name = malloc((strlen(parsed) + 1) * sizeof(char));
+        strcpy(lStudent.name, parsed);
+        // W Seminars
+        for (int i = 0; i < 3; ++i) {
+            parsed = strtok(NULL, ";");
+            failIfNull(parsed, buf);
+            lStudent.wVotes[i] = wSeminars.seminars[strtol(parsed, NULL, 10)];
+        }
+        // P Seminars
+        for (int i = 0; i < 3; ++i) {
+            parsed = strtok(NULL, ";");
+            failIfNull(parsed, buf);
+            lStudent.pVotes[i] = pSeminars.seminars[strtol(parsed, NULL, 10)];
+        }
+
+        students[studentc++] = lStudent;
+    }
+    fclose(file);
+
+    free(line);
+    studentArray ret = {.size = studentc, .students = students};
+    return ret;
+}
