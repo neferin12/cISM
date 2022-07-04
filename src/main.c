@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "headers/fileInterface.h"
 #include "headers/organization.h"
+#include "headers/algorithm.h"
 
 int main(int argc, char* argv[]) {
     if (argc < 3) {
@@ -25,18 +26,19 @@ int main(int argc, char* argv[]) {
     }
 
     studentArray students = getStudents(argv[1], w_seminars, p_seminars);
-    for (int i = 0; i < students.size; i++) {
-        student student = students.students[i];
-        printf("%s:\n", student.name);
-        printf("  W:\n");
-        for (int j = 0; j < 3; j++) {
-            printf("      - %s\n", student.wVotes[j].name);
-        }
-        printf("  P:\n");
-        for (int j = 0; j < 3; j++) {
-            printf("      - %s\n", student.pVotes[j].name);
-        }
-    }
+    runAlgorithm(students);
+//    for (int i = 0; i < students.size; i++) {
+//        student student = students.students[i];
+//        printf("%s:\n", student.name);
+//        printf("  W:\n");
+//        for (int j = 0; j < 3; j++) {
+//            printf("      - %s\n", student.wVotes[j].name);
+//        }
+//        printf("  P:\n");
+//        for (int j = 0; j < 3; j++) {
+//            printf("      - %s\n", student.pVotes[j].name);
+//        }
+//    }
 
     freeStudents(students);
     freeSeminars(w_seminars);
