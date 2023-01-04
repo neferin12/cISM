@@ -47,6 +47,7 @@ seminarArray getSeminars(const char *filename, char type) {
         snprintf(buf, 80, "seminars incorrectly configured at line %d\n", linec);
         failIfNull(parsed, buf);
         seminar lSeminar;
+        lSeminar.members = 0;
         lSeminar.name = malloc((strlen(parsed) + 1) * sizeof(char));
         strcpy( lSeminar.name, parsed);
         parsed = strtok(NULL, ";");
@@ -108,6 +109,8 @@ studentArray getStudents(const char *filename, seminarArray wSeminars, seminarAr
             failIfNull(parsed, buf);
             lStudent.pVotes[i] = pSeminars.seminars[strtol(parsed, NULL, 10)];
         }
+
+        lStudent.mimiPoints = 0;
 
         students[studentc++] = lStudent;
     }
