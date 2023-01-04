@@ -47,7 +47,6 @@ seminarArray getSeminars(const char *filename, char type) {
         snprintf(buf, 80, "seminars incorrectly configured at line %d\n", linec);
         failIfNull(parsed, buf);
         seminar lSeminar;
-        lSeminar.members = 0;
         lSeminar.name = malloc((strlen(parsed) + 1) * sizeof(char));
         strcpy( lSeminar.name, parsed);
         parsed = strtok(NULL, ";");
@@ -98,12 +97,14 @@ studentArray getStudents(const char *filename, seminarArray wSeminars, seminarAr
         lStudent.name = malloc((strlen(parsed) + 1) * sizeof(char));
         strcpy(lStudent.name, parsed);
         // W Seminars
+        lStudent.wVotes = malloc(sizeof(seminar) * 3);
         for (int i = 0; i < 3; ++i) {
             parsed = strtok(NULL, ";");
             failIfNull(parsed, buf);
             lStudent.wVotes[i] = wSeminars.seminars[strtol(parsed, NULL, 10)];
         }
         // P Seminars
+        lStudent.pVotes = malloc(sizeof(seminar) * 3);
         for (int i = 0; i < 3; ++i) {
             parsed = strtok(NULL, ";");
             failIfNull(parsed, buf);

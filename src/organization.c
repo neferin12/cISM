@@ -12,6 +12,8 @@ void freeSeminars(seminarArray seminars){
 void freeStudents(studentArray schuelers){
     for (int i = 0; i < schuelers.size; i++) {
         free(schuelers.students[i].name);
+        free(schuelers.students[i].wVotes);
+        free(schuelers.students[i].pVotes);
     }
 
     free(schuelers.students);

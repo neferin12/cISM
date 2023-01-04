@@ -28,8 +28,9 @@ int main(int argc, char *argv[]) {
     printf("Schüler: %i\n", students.size);
     printf("Seminare: %d\n", p_seminars.size + w_seminars.size);
 
-    runAlgorithm(students);
+    studentArray finished = runAlgorithm(students, w_seminars, p_seminars);
 
+    free(finished.students);
     freeStudents(students);
     freeSeminars(w_seminars);
     freeSeminars(p_seminars);

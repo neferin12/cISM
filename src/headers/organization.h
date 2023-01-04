@@ -4,7 +4,6 @@ struct seminar {
     char *name;
     char seminarType;
     int size;
-    int members;
 };
 typedef struct seminar seminar;
 
@@ -16,8 +15,8 @@ typedef struct seminarArray{
 struct student {
     char *name;
     int mimiPoints;
-    seminar wVotes[3];
-    seminar pVotes[3];
+    seminar *wVotes;
+    seminar *pVotes;
     seminar wSeminar;
     seminar pSeminar;
 };
