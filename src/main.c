@@ -10,27 +10,34 @@ int main(int argc, char *argv[]) {
         exit(1);
     }
 
-    seminarArray w_seminars = getSeminars(argv[2], 'W');
-    seminarArray p_seminars = getSeminars(argv[2], 'P');
+    GArray *w_seminars = getSeminars(argv[2], 'W');
+    GArray *p_seminars = getSeminars(argv[2], 'P');
 
     printf("W-Seminare:\n");
-    for (int i = 0; i < w_seminars.size; i++) {
-        printf("    %d: %s\n", i, w_seminars.seminars[i].name);
+    for (int i = 0; i < w_seminars->len; i++) {
+        printf("    %d: %s\n", i, g_array_index(w_seminars, seminar, i).name);
     }
 
     printf("P-Seminare:\n");
-    for (int i = 0; i < p_seminars.size; i++) {
-        printf("    %d: %s\n", i, p_seminars.seminars[i].name);
+    for (int i = 0; i < p_seminars->len; i++) {
+        printf("    %d: %s\n", i, g_array_index(p_seminars, seminar, i).name);
     }
 
-    studentArray students = getStudents(argv[1], w_seminars, p_seminars);
+    GArray *students = getStudents(argv[1], w_seminars, p_seminars);
 
-    printf("Schüler: %i\n", students.size);
-    printf("Seminare: %d\n", p_seminars.size + w_seminars.size);
+    printf("Schüler: %i\n", students->len);
+    printf("Seminare: %d\n", p_seminars->len + w_seminars->len);
 
-    studentArray finished = runAlgorithm(students, w_seminars, p_seminars);
+    GArray *finished = runAlgorithm(students, w_seminars, p_seminars);
 
-    free(finished.students);
+    printf("---------|%i|---------\n", accumulatePoints(finished));
+
+    for (int i = 0; i < finished->len; i++) {
+        student s = g_array_index(finished, student, i);
+        printf("(%i) %s, %i, (W: %s | P: %s)\n", i + 1, s.name, s.mimiPoints, s.wSeminar.name, s.pSeminar.name);
+    }
+
+    //free(finished.students);
     freeStudents(students);
     freeSeminars(w_seminars);
     freeSeminars(p_seminars);

@@ -1,7 +1,6 @@
 #include "organization.h"
 #ifndef CISM_FILEINTERFACE_H
 #define CISM_FILEINTERFACE_H
-int countlines(char *filename);
-seminarArray getSeminars(const char *filename, char type);
-studentArray getStudents(const char *filename, seminarArray wSeminars, seminarArray pSeminars);
+GArray *getSeminars(const char *filename, char type);
+GArray *getStudents(const char *filename, GArray *wSeminars, GArray *pSeminars);
 #endif //CISM_FILEINTERFACE_H

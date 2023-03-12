@@ -5,31 +5,10 @@
 #include "headers/organization.h"
 #include "headers/errorHandling.h"
 
-int countlines(char *filename)
-{
-    // count the number of lines in the file called filename
-    FILE *fp = fopen(filename,"r");
-    int ch=0;
-    int lines=0;
 
-    if (fp == NULL) {
-        return 0;
-    }
-
-    lines++;
-    while ((ch = fgetc(fp)) != EOF)
-    {
-        if (ch == '\n')
-            lines++;
-    }
-    fclose(fp);
-    return lines;
-}
-
-
-seminarArray getSeminars(const char *filename, char type) {
-    seminar *seminars = NULL;
-    int seminarc = 0;
+GArray* getSeminars(const char *filename, char type) {
+    GArray *seminars = g_array_new(FALSE, FALSE, sizeof(seminar));
+    g_array_set_clear_func(seminars, (GDestroyNotify) freeSeminar);
     FILE *file = fopen(filename, "r");
     if (file == NULL) {
         dieWithErrno("could not open file");
@@ -40,7 +19,6 @@ seminarArray getSeminars(const char *filename, char type) {
     while (getline(&line, &len, file) != -1) {
         linec++;
         line[strcspn(line, "\n")] = 0;
-        seminars = realloc(seminars, sizeof(seminar) * (seminarc + 1));
         failIfNull(seminars, "realloc");
         char *parsed = strtok(line, ";");
         char buf[80];
@@ -61,8 +39,10 @@ seminarArray getSeminars(const char *filename, char type) {
         } else {
             dieWithoutErrno(buf);
         }
+        lSeminar.id = g_new0(gint, 1);
+        *lSeminar.id = linec;
         if (parsed[0]==type) {
-            seminars[seminarc++] = lSeminar;
+            seminars = g_array_append_vals(seminars, &lSeminar, 1);
         } else {
             free(lSeminar.name);
         }
@@ -70,13 +50,12 @@ seminarArray getSeminars(const char *filename, char type) {
     fclose(file);
 
     free(line);
-    seminarArray ret = {.size = seminarc, .seminars = seminars};
-    return ret;
+    return seminars;
 }
 
-studentArray getStudents(const char *filename, seminarArray wSeminars, seminarArray pSeminars) {
-    student *students = NULL;
-    int studentc = 0;
+GArray *getStudents(const char *filename, GArray *wSeminars, GArray *pSeminars) {
+    GArray *students = g_array_new(FALSE, FALSE, sizeof(student));
+    g_array_set_clear_func(students, (GDestroyNotify) freeStudent);
     FILE *file = fopen(filename, "r");
     if (file == NULL) {
         dieWithErrno("could not open file");
@@ -87,7 +66,6 @@ studentArray getStudents(const char *filename, seminarArray wSeminars, seminarAr
     while (getline(&line, &len, file) != -1) {
         linec++;
         line[strcspn(line, "\n")] = 0;
-        students = realloc(students, sizeof(student) * (studentc + 1));
         failIfNull(students, "realloc");
         char *parsed = strtok(line, ";");
         char buf[80];
@@ -101,23 +79,22 @@ studentArray getStudents(const char *filename, seminarArray wSeminars, seminarAr
         for (int i = 0; i < 3; ++i) {
             parsed = strtok(NULL, ";");
             failIfNull(parsed, buf);
-            lStudent.wVotes[i] = wSeminars.seminars[strtol(parsed, NULL, 10)];
+            lStudent.wVotes[i] = g_array_index(wSeminars, seminar, strtol(parsed, NULL, 10));
         }
         // P Seminars
         lStudent.pVotes = malloc(sizeof(seminar) * 3);
         for (int i = 0; i < 3; ++i) {
             parsed = strtok(NULL, ";");
             failIfNull(parsed, buf);
-            lStudent.pVotes[i] = pSeminars.seminars[strtol(parsed, NULL, 10)];
+            lStudent.pVotes[i] = g_array_index(pSeminars, seminar, strtol(parsed, NULL, 10));
         }
 
         lStudent.mimiPoints = 0;
 
-        students[studentc++] = lStudent;
+        students = g_array_append_vals(students, &lStudent, 1);
     }
     fclose(file);
 
     free(line);
-    studentArray ret = {.size = studentc, .students = students};
-    return ret;
+    return students;
 }

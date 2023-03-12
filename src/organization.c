@@ -1,20 +1,31 @@
 #include "headers/organization.h"
 #include <stdlib.h>
 
-void freeSeminars(seminarArray seminars){
-    for(int i = 0; i<seminars.size;i++){
-        free(seminars.seminars[i].name);
-    }
-
-    free(seminars.seminars);
+void freeSeminar(seminar *sp){
+    seminar s = *sp;
+    free(s.name);
+    g_free(sp->id);
 }
 
-void freeStudents(studentArray schuelers){
-    for (int i = 0; i < schuelers.size; i++) {
-        free(schuelers.students[i].name);
-        free(schuelers.students[i].wVotes);
-        free(schuelers.students[i].pVotes);
-    }
+void freeSeminars(GArray *seminars){
+    g_array_free(seminars, TRUE);
+}
 
-    free(schuelers.students);
+void freeStudent(student *sp){
+    student s = *sp;
+    free(s.name);
+    free(s.wVotes);
+    free(s.pVotes);
+}
+
+void freeStudents(GArray *students){
+    g_array_free(students, TRUE);
+}
+
+int accumulatePoints(GArray *students){
+    int p = 0;
+    for (int i = 0; i < students->len; i++) {
+        p += g_array_index(students, student, i).mimiPoints;
+    }
+    return p;
 }

@@ -4,5 +4,4 @@ ism
 .idea
 build
 /cism
-cmake-build-debug
-/cmake-build-debug-coverage/
+cmake-build-*

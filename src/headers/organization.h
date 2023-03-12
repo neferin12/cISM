@@ -1,16 +1,15 @@
 #ifndef CISM_ORGANIZATION_H
 #define CISM_ORGANIZATION_H
+
+#include <glib.h>
+
 struct seminar {
     char *name;
     char seminarType;
     int size;
+    int *id;
 };
 typedef struct seminar seminar;
-
-typedef struct seminarArray{
-    int size;
-    seminar *seminars;
-} seminarArray;
 
 struct student {
     char *name;
@@ -22,12 +21,11 @@ struct student {
 };
 typedef struct student student;
 
-typedef struct studentArray{
-    int size;
-    student *students;
-} studentArray;
+void freeSeminars(GArray *seminars);
+void freeSeminar(seminar *seminar);
+void freeStudents(GArray *students);
+void freeStudent(student *students);
 
-void freeSeminars(seminarArray seminars);
-void freeStudents(studentArray schuelers);
+int accumulatePoints(GArray *students);
 
 #endif //CISM_ORGANIZATION_H
