@@ -5,11 +5,12 @@
 #include "headers/algorithm.h"
 
 int main(int argc, char *argv[]) {
-    if (argc < 3) {
-        fprintf(stderr, "Benutzung: ism <Wahldatei> <Seminardatei>\n");
+    if (argc < 4) {
+        fprintf(stderr, "Benutzung: ism <Wahldatei> <Seminardatei> <runs>\n");
         exit(1);
     }
 
+    int times = strtol(argv[3], NULL, 10);
     GArray *w_seminars = getSeminars(argv[2], 'W');
     GArray *p_seminars = getSeminars(argv[2], 'P');
 
@@ -28,7 +29,7 @@ int main(int argc, char *argv[]) {
     printf("Schüler: %i\n", students->len);
     printf("Seminare: %d\n", p_seminars->len + w_seminars->len);
 
-    GArray *finished = runAlgorithm(students, w_seminars, p_seminars);
+    GArray *finished = batchRunAlgorithmn(times,students, w_seminars, p_seminars);
 
     printf("---------|%i|---------\n", accumulatePoints(finished));
 
