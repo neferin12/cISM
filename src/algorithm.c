@@ -48,7 +48,7 @@ static int compareStudentsByPoints(const student *s1, const student *s2){
     return s2->mimiPoints-s1->mimiPoints;
 }
 
-static gboolean tryAssignment(student *s, seminar sel, int *assigments, int points, char semType){
+static bool tryAssignment(student *s, seminar sel, int *assigments, int points, char semType){
     int assignedStudents = assigments[*sel.id];
     if (assignedStudents < sel.size) {
         assigments[*sel.id] = assignedStudents + 1;
