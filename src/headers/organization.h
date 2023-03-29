@@ -26,6 +26,6 @@ void freeSeminar(seminar *seminar);
 void freeStudents(GArray *students);
 void freeStudent(student *students);
 
-int accumulatePoints(GArray *students);
+int accumulatePoints(const GArray *students);
 
 #endif //CISM_ORGANIZATION_H

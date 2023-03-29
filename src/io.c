@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "headers/fileInterface.h"
+#include "headers/io.h"
 #include "headers/organization.h"
 #include "headers/errorHandling.h"
 
@@ -97,4 +97,13 @@ GArray *getStudents(const char *filename, GArray *wSeminars, GArray *pSeminars) 
 
     free(line);
     return students;
+}
+
+void outputResult(const GArray *finished){
+    printf("---------|%i|---------\n", accumulatePoints(finished));
+
+    for (int i = 0; i < finished->len; i++) {
+        student s = g_array_index(finished, student, i);
+        printf("(%i) %s, %i, (W: %s | P: %s)\n", i + 1, s.name, s.mimiPoints, s.wSeminar.name, s.pSeminar.name);
+    }
 }
