@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "headers/fileInterface.h"
+#include "headers/io.h"
 #include "headers/organization.h"
 #include "headers/algorithm.h"
+#include "errorHandling.h"
 
 int main(int argc, char *argv[]) {
     if (argc < 4) {
@@ -10,7 +11,13 @@ int main(int argc, char *argv[]) {
         exit(1);
     }
 
-    int times = strtol(argv[3], NULL, 10);
+    long runs = strtol(argv[3], NULL, 10);
+    if (runs == LONG_MIN || runs == LONG_MAX) {
+        dieWithErrno("Failed to parse runs argument");
+    }
+    if (runs > INT_MAX || runs < INT_MIN) {
+        dieWithoutErrno("Invalid size for runs argument");
+    }
     GArray *w_seminars = getSeminars(argv[2], 'W');
     GArray *p_seminars = getSeminars(argv[2], 'P');
 
@@ -29,14 +36,9 @@ int main(int argc, char *argv[]) {
     printf("Schüler: %i\n", students->len);
     printf("Seminare: %d\n", p_seminars->len + w_seminars->len);
 
-    GArray *finished = batchRunAlgorithmn(times,students, w_seminars, p_seminars);
+    GArray *finished = batchRunAlgorithmn(runs,students, w_seminars, p_seminars);
 
-    printf("---------|%i|---------\n", accumulatePoints(finished));
-
-    for (int i = 0; i < finished->len; i++) {
-        student s = g_array_index(finished, student, i);
-        printf("(%i) %s, %i, (W: %s | P: %s)\n", i + 1, s.name, s.mimiPoints, s.wSeminar.name, s.pSeminar.name);
-    }
+    outputResult(finished);
 
     //free(finished.students);
     freeStudents(students);

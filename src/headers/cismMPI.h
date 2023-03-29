@@ -7,5 +7,5 @@
 
 #include <glib.h>
 
-GArray *mpiRun(int runsPerProcess, const GArray *students, const GArray *w_seminars, const GArray *p_seminars);
+GArray *mpiRun(int runsPerProcess, const char *filenameVotes, const char *filenameSeminars);
 #endif //CISM_CISMMPI_H
