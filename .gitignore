@@ -1,6 +1,5 @@
 ism
 *.o
-*.csv
 .idea
 build
 /cism

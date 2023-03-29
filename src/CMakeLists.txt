@@ -1,5 +1,3 @@
-include_directories(${PROJECT_SOURCE_DIR}/src/headers)
-
 set(CMAKE_CXX_FLAGS "-Wall -Wextra")
 set(CMAKE_CXX_FLAGS_DEBUG "-g")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")

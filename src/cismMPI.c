@@ -71,6 +71,9 @@ GArray *mpiRun(int runsPerProcess, const char *filenameVotes, const char *filena
     MPI_Barrier(MPI_COMM_WORLD);
 
     //printf("%i points from process %d of %d\n", points, process_Rank, size_Of_Comm);
+    freeStudents(students);
+    freeSeminars(wSeminars);
+    freeSeminars(pSeminars);
 
     MPI_Finalize();
     return NULL;

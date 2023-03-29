@@ -23,12 +23,12 @@ int main(int argc, char *argv[]) {
 
     printf("W-Seminare:\n");
     for (int i = 0; i < w_seminars->len; i++) {
-        printf("    %d: %s\n", i, g_array_index(w_seminars, seminar, i).name);
+        printf("    %d: %s (%i)\n", i, g_array_index(w_seminars, seminar, i).name, *g_array_index(w_seminars, seminar, i).id);
     }
 
     printf("P-Seminare:\n");
     for (int i = 0; i < p_seminars->len; i++) {
-        printf("    %d: %s\n", i, g_array_index(p_seminars, seminar, i).name);
+        printf("    %d: %s (%i)\n", i, g_array_index(p_seminars, seminar, i).name, *g_array_index(p_seminars, seminar, i).id);
     }
 
     GArray *students = getStudents(argv[1], w_seminars, p_seminars);

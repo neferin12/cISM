@@ -78,15 +78,23 @@ GArray *getStudents(const char *filename, GArray *wSeminars, GArray *pSeminars) 
         lStudent.wVotes = malloc(sizeof(seminar) * 3);
         for (int i = 0; i < 3; ++i) {
             parsed = strtok(NULL, ";");
+            int ind = strtol(parsed, NULL, 10);
             failIfNull(parsed, buf);
-            lStudent.wVotes[i] = g_array_index(wSeminars, seminar, strtol(parsed, NULL, 10));
+            if (ind < 0 || ind > wSeminars->len-1 ) {
+                dieWithoutErrno(buf);
+            }
+            lStudent.wVotes[i] = g_array_index(wSeminars, seminar, ind);
         }
         // P Seminars
         lStudent.pVotes = malloc(sizeof(seminar) * 3);
         for (int i = 0; i < 3; ++i) {
             parsed = strtok(NULL, ";");
             failIfNull(parsed, buf);
-            lStudent.pVotes[i] = g_array_index(pSeminars, seminar, strtol(parsed, NULL, 10));
+            int ind = strtol(parsed, NULL, 10);
+            if (ind < 0 || ind > pSeminars->len-1) {
+                dieWithoutErrno(buf);
+            }
+            lStudent.pVotes[i] = g_array_index(pSeminars, seminar, ind);
         }
 
         lStudent.mimiPoints = 0;
