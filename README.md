@@ -1,3 +1,5 @@
+# Moved into https://github.com/neferin12/iSM
+
 # cISM
 A C Implementation of ISM
 
